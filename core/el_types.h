@@ -81,6 +81,11 @@ typedef struct EL_ATTR_PACKED el_point_t {
     uint8_t  target;
 } el_point_t;
 
+typedef struct EL_ATTR_PACKED el_direction_t {
+    uint16_t x;
+    uint16_t y;
+} el_direction_t;
+
 typedef struct EL_ATTR_PACKED el_class_t {
     uint16_t score;
     uint16_t target;
@@ -154,7 +159,8 @@ typedef enum {
     EL_ALGO_TYPE_FOMO      = 1u,
     EL_ALGO_TYPE_PFLD      = 2u,
     EL_ALGO_TYPE_YOLO      = 3u,
-    EL_ALGO_TYPE_IMCLS     = 4u
+    EL_ALGO_TYPE_IMCLS     = 4u,
+    EL_ALGO_TYPE_DIRNET    = 5u,
 } el_algorithm_type_t;
 
 /**
@@ -165,6 +171,7 @@ typedef enum {
     EL_ALGO_CAT_DET       = 1u,
     EL_ALGO_CAT_POSE      = 2u,
     EL_ALGO_CAT_CLS       = 3u,
+    EL_ALGO_CAT_DIRNET    = 4u
 } el_algorithm_cat_t;
 
 /**

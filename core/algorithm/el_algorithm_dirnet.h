@@ -23,55 +23,60 @@
  *
  */
 
-#ifndef _EL_ALGORITHM_DELEGATE_H_
-#define _EL_ALGORITHM_DELEGATE_H_
+#pragma once
 
+#include <atomic>
+#include <cstdint>
 #include <forward_list>
 
-#include "core/engine/el_engine_base.h"
+#include "core/el_types.h"
 #include "el_algorithm_base.h"
-#include "el_algorithm_dirnet.h"
-#include "el_algorithm_fomo.h"
-#include "el_algorithm_imcls.h"
-#include "el_algorithm_pfld.h"
-#include "el_algorithm_yolo.h"
 
 namespace edgelab {
 
 using namespace edgelab::base;
 using namespace edgelab::types;
 
-namespace utility {
+namespace types {
 
-el_algorithm_type_t el_algorithm_type_from_engine(const Engine* engine);
+// we're not using inheritance since it not standard layout
+struct el_algorithm_dirnet_config_t {
+    static constexpr el_algorithm_info_t info{
+      .type = EL_ALGO_TYPE_DIRNET, .categroy = EL_ALGO_CAT_DIRNET, .input_from = EL_SENSOR_TYPE_CAM};
+};
 
-}  // namespace utility
+}  // namespace types
 
-using Algorithm = class base::Algorithm;
-
-class AlgorithmDelegate {
+class AlgorithmDirNet : public Algorithm {
    public:
-    using InfoType = el_algorithm_info_t;
+    using ImageType  = el_img_t;
+    using OutputType = el_direction_t;
+    using ConfigType = el_algorithm_dirnet_config_t;
 
-    ~AlgorithmDelegate() = default;
+    static InfoType algorithm_info;
 
-    static AlgorithmDelegate* get_delegate();
+    AlgorithmDirNet(EngineType* engine);
+    AlgorithmDirNet(EngineType* engine, const ConfigType& config);
+    ~AlgorithmDirNet();
 
-    InfoType get_algorithm_info(el_algorithm_type_t type) const;
+    static bool is_model_valid(const EngineType* engine);
 
-    const std::forward_list<const InfoType*>& get_all_algorithm_info() const;
+    el_err_code_t                        run(ImageType* input);
+    const std::forward_list<OutputType>& get_results() const;
 
-    size_t get_all_algorithm_info_count() const;
-
-    bool has_algorithm(el_algorithm_type_t type) const;
+    void       set_algorithm_config(const ConfigType& config);
+    ConfigType get_algorithm_config() const;
 
    protected:
-    AlgorithmDelegate();
+    inline void init();
+
+    el_err_code_t preprocess() override;
+    el_err_code_t postprocess() override;
 
    private:
-    std::forward_list<const InfoType*> _registered_algorithms;
+    ImageType _input_img;
+
+    std::forward_list<OutputType> _results;
 };
 
 }  // namespace edgelab
-
-#endif
