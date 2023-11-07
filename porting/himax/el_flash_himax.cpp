@@ -31,8 +31,6 @@
 
 namespace edgelab {
 
-#ifdef CONFIG_EL_MODEL
-
 el_err_code_t el_model_partition_mmap_init(const char*              partition_name,
                                            uint32_t*                partition_start_addr,
                                            uint32_t*                partition_size,
@@ -42,10 +40,6 @@ el_err_code_t el_model_partition_mmap_init(const char*              partition_na
 }
 
 void el_model_partition_mmap_deinit(el_model_mmap_handler_t* mmap_handler) {}
-
-#endif
-
-#ifdef CONFIG_EL_LIB_FLASHDB
 
 static int el_flash_db_init(void) { return 1; }
 
@@ -76,6 +70,7 @@ static int el_flash_db_erase(long offset, size_t size) {
     return ret;
 }
 
+#ifdef CONFIG_EL_LIB_FLASHDB
 const struct fal_flash_dev el_flash_db_nor_flash0 = {
   .name = CONFIG_EL_STORAGE_PARTITION_MOUNT_POINT,
  //0x200000 is the flash size of himax6538, 0x10000 is the data size for flashdb
@@ -85,7 +80,6 @@ const struct fal_flash_dev el_flash_db_nor_flash0 = {
   .ops        = {el_flash_db_init, el_flash_db_read, el_flash_db_write, el_flash_db_erase},
   .write_gran = FDB_WRITE_GRAN,
 };
-
 #endif
 
 }  // namespace edgelab

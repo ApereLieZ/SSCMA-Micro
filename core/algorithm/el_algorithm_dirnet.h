@@ -50,7 +50,7 @@ struct el_algorithm_dirnet_config_t {
 class AlgorithmDirNet : public Algorithm {
    public:
     using ImageType  = el_img_t;
-    using OutputType = el_direction_t;
+    using OutputType  = el_direction_t;
     using ConfigType = el_algorithm_dirnet_config_t;
 
     static InfoType algorithm_info;
@@ -61,7 +61,7 @@ class AlgorithmDirNet : public Algorithm {
 
     static bool is_model_valid(const EngineType* engine);
 
-    el_err_code_t                        run(ImageType* input);
+    el_err_code_t                       run(ImageType* input);
     const std::forward_list<OutputType>& get_results() const;
 
     void       set_algorithm_config(const ConfigType& config);

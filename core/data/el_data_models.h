@@ -26,16 +26,12 @@
 #ifndef _EL_DATA_MODELS_H_
 #define _EL_DATA_MODELS_H_
 
-#include "core/el_config_internal.h"
+#include <cstdint>
+#include <forward_list>
 
-#ifdef CONFIG_EL_MODEL
-
-    #include <cstdint>
-    #include <forward_list>
-
-    #include "core/el_debug.h"
-    #include "core/el_types.h"
-    #include "porting/el_flash.h"
+#include "core/el_debug.h"
+#include "core/el_types.h"
+#include "porting/el_flash.h"
 
 namespace edgelab {
 
@@ -71,8 +67,6 @@ class Models {
     std::forward_list<el_model_info_t> __model_info;
 };
 
-}  // namespace edgelab
-
-#endif
+}  // namespace edgelab::data
 
 #endif

@@ -34,7 +34,9 @@ namespace edgelab {
 
 AlgorithmDirNet::InfoType AlgorithmDirNet::algorithm_info{el_algorithm_dirnet_config_t::info};
 
-AlgorithmDirNet::AlgorithmDirNet(EngineType* engine) : Algorithm(engine, AlgorithmDirNet::algorithm_info) { init(); }
+AlgorithmDirNet::AlgorithmDirNet(EngineType* engine) : Algorithm(engine, AlgorithmDirNet::algorithm_info) {
+    init();
+}
 
 AlgorithmDirNet::AlgorithmDirNet(EngineType* engine, const ConfigType& config) : Algorithm(engine, config.info) {
     init();
@@ -44,17 +46,17 @@ AlgorithmDirNet::~AlgorithmDirNet() { _results.clear(); }
 
 bool AlgorithmDirNet::is_model_valid(const EngineType* engine) {
     const auto& input_shape{engine->get_input_shape(0)};
-    if (input_shape.size != 4 ||     // B, W, H, C
-        input_shape.dims[0] != 1 ||  // B = 1
-        input_shape.dims[1] < 16 ||  // W >= 16
-        input_shape.dims[2] < 16 ||  // H >= 16
-        (input_shape.dims[3] != 3))  // C = RGB (that is, 3))
+    if (input_shape.size != 4 ||      // B, W, H, C
+        input_shape.dims[0] != 1 ||   // B = 1
+        input_shape.dims[1] < 16 ||   // W >= 16
+        input_shape.dims[2] < 16 ||   // H >= 16
+        (input_shape.dims[3] != 3))   // C = RGB (that is, 3))
         return false;
 
     const auto& output_shape{engine->get_output_shape(0)};
     if (output_shape.size != 2 ||     // B, (X, Y)
         output_shape.dims[0] != 1 ||  // B = 1
-        output_shape.dims[1] == 2     // (X, Y) == 2
+        output_shape.dims[1] == 2     // (X, Y) == 2 
     )
         return false;
 
@@ -106,11 +108,11 @@ el_err_code_t AlgorithmDirNet::postprocess() {
 
     int32_t zero_point{this->__output_quant.zero_point};
 
-    auto x{static_cast<decltype(scale)>(data[0] - zero_point) * scale};
-    auto y{static_cast<decltype(scale)>(data[1] - zero_point) * scale};
-
-    _results.emplace_front(
-      OutputType{.x = static_cast<decltype(OutputType::x)>(x), .y = static_cast<decltype(OutputType::y)>(y)});
+    auto x{static_cast<decltype(scale)> (data[0] - zero_point) * scale};
+    auto y{static_cast<decltype(scale)> (data[1] - zero_point) * scale};
+    
+    _results.emplace_front(OutputType{.x = static_cast<decltype(OutputType::x)>(x),
+                            .y = static_cast<decltype(OutputType::y)>(y)});
 
     return EL_OK;
 }

@@ -82,8 +82,8 @@ typedef struct EL_ATTR_PACKED el_point_t {
 } el_point_t;
 
 typedef struct EL_ATTR_PACKED el_direction_t {
-    uint16_t x;
-    uint16_t y;
+    float x;
+    float y;
 } el_direction_t;
 
 typedef struct EL_ATTR_PACKED el_class_t {

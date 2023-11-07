@@ -1,5 +1,10 @@
 #pragma once
 
+#if CONFIG_EL_HAS_FREERTOS_SUPPORT
+    #include <freertos/FreeRTOS.h>
+    #include <freertos/task.h>
+#endif
+
 #include <atomic>
 #include <cstdio>
 #include <functional>

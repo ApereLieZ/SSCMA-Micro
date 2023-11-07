@@ -16,5 +16,3 @@ docs/def/**
 docs/html/**
 docs/man/man3/_**_.3
 
-CMakeLists.txt
-Makefile

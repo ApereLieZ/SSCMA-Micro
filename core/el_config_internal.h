@@ -85,7 +85,6 @@
 
 /* model related config */
 #ifndef CONFIG_EL_MODEL
-    #define CONFIG_EL_MODEL
     #define CONFIG_EL_MODEL_TFLITE_MAGIC   0x54464C33
     #define CONFIG_EL_MODEL_HEADER_MAGIC   0x4C4854
     #define CONFIG_EL_MODEL_PARTITION_NAME "models"
@@ -93,9 +92,8 @@
 
 /* storage related config */
 #ifndef CONFIG_EL_STORAGE
-    #define CONFIG_EL_STORAGE
     #ifndef CONFIG_EL_LIB_FLASHDB
-        #warning "Storage depends on FlashDB."
+        #error "Storage depends on FlashDB."
     #endif
     #define CONFIG_EL_STORAGE_NAME                  "edgelab_db"
     #define CONFIG_EL_STORAGE_PATH                  "kvdb0"
@@ -105,7 +103,5 @@
     #define CONFIG_EL_STORAGE_PARTITION_FS_SIZE_0   (192 * 1024)
     #define CONFIG_EL_STORAGE_KEY_SIZE_MAX          (64)
 #endif
-
-#include "el_board_config.h"
 
 #endif

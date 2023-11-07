@@ -28,13 +28,14 @@
 
 #include <forward_list>
 
-#include "core/engine/el_engine_base.h"
-#include "el_algorithm_base.h"
-#include "el_algorithm_dirnet.h"
 #include "el_algorithm_fomo.h"
 #include "el_algorithm_imcls.h"
 #include "el_algorithm_pfld.h"
 #include "el_algorithm_yolo.h"
+#include "el_algorithm_dirnet.h"
+
+#include "core/engine/el_engine_base.h"
+#include "el_algorithm_base.h"
 
 namespace edgelab {
 

@@ -28,6 +28,11 @@
 
 #include "core/el_config_internal.h"
 
+#if CONFIG_EL_HAS_FREERTOS_SUPPORT
+    #include <freertos/FreeRTOS.h>
+    #include <freertos/semphr.h>
+#endif
+
 namespace edgelab {
 
 class Mutex {
